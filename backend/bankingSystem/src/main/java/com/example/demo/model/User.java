@@ -1,6 +1,13 @@
 package com.example.demo.model;
 
 import javax.persistence.CascadeType;
+import org.hibernate.validator.constraints.*;
+
+import com.example.demo.validation.ValidateGender;
+import com.example.demo.validation.ValidateIsAdmin;
+import com.example.demo.validation.ValidateTitle;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.istack.NotNull;
 
 //import java.sql.Date;
 
@@ -13,9 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,74 +39,86 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	@Column(unique = true, nullable = false)
-//	@Email(message = "Invalid email address")
+	@Email(message = "Invalid email address")
+	@NotNull
 	private String email;
+	
+	@NotNull
 	@Column(unique = true, nullable = false)
-//	@Pattern(regexp = "^\\d{10}$", message = "Invalid mobile number")
-	private long mobileNum;
+
+	//@Pattern(regexp = "^[6-9]\\d{9}$", message = " Invalid mobile number")
+	private Long mobileNum;
+
+	
+
+
+	@NotNull
 	@Column(unique = true, nullable = false)
-	private long adharId;
+	private Long adharId;
+	
+	@NotNull
 	@Column(nullable = false)
+	@ValidateTitle
 	private String title;
+	
+	@NotNull
 	@Column(nullable = false)
 	private String firstName;
 	private String middleName;
+	
+	@NotNull
+	@Column(nullable=false)
 	private String fatherName;
+	
+	@NotNull
 	@Column(nullable = false)
 	private String lastName;
+	
+	@NotNull
 	@Column(nullable = false)
 	private String dob;
+	
+	@NotNull
 	@Column(nullable = false)
-//	@Min(10)
+	@Min(10)
 	private int age;
+	
+	@NotNull
+	@Column(nullable=false)
+	@ValidateGender
 	private String gender;
+	
+	
 	@Column(nullable = false)
+	@NotNull
 	private String permAddId;
+	
+	@NotNull
+	@Column(nullable=false)
 	private String tempAddId;
+	
+	@NotNull
 	@Column(nullable = false)
+	@ValidateIsAdmin
+	//@ValueOfEnum(enumClass=IsAdmin.class, Choose 1 for Yes or 0 for No")
 	private int isAdmin;
+	
+	@NotNull
 	@Column(nullable = false)
 	private String occupationType;
+	
+	@NotNull
 	@Column(nullable = false)
 	private String incomeSource;
+	
+	@NotNull
 	@Column(nullable = false)
 	private double annualIncome;
 	
-//	fetch=FetchType.EAGER, ,  cascade=CascadeType.ALL
-	@OneToOne(mappedBy = "user",cascade=CascadeType.ALL)
-//	@OneToOne(mappedBy = "user")
+//	fetch=FetchType.EAGER,
+    @OneToOne(mappedBy = "user",  cascade=CascadeType.ALL)
 	@JsonManagedReference
 	private Account account;
-
-	public User() {
-		super();
-	}
-
-	public User(Long id, @Email(message = "Invalid email address") String email, long mobileNum, long adharId,
-			String title, String firstName, String middleName, String fatherName, String lastName, String dob, int age,
-			String gender, String permAddId, String tempAddId, int isAdmin, String occupationType, String incomeSource,
-			double annualIncome, Account account) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.mobileNum = mobileNum;
-		this.adharId = adharId;
-		this.title = title;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.fatherName = fatherName;
-		this.lastName = lastName;
-		this.dob = dob;
-		this.age = age;
-		this.gender = gender;
-		this.permAddId = permAddId;
-		this.tempAddId = tempAddId;
-		this.isAdmin = isAdmin;
-		this.occupationType = occupationType;
-		this.incomeSource = incomeSource;
-		this.annualIncome = annualIncome;
-		this.account = account;
-	}
 
 	public Long getId() {
 		return id;
@@ -118,19 +136,19 @@ public class User {
 		this.email = email;
 	}
 
-	public long getMobileNum() {
+	public Long getMobileNum() {
 		return mobileNum;
 	}
 
-	public void setMobileNum(long mobileNum) {
+	public void setMobileNum(Long mobileNum) {
 		this.mobileNum = mobileNum;
 	}
 
-	public long getAdharId() {
+	public Long getAdharId() {
 		return adharId;
 	}
 
-	public void setAdharId(long adharId) {
+	public void setAdharId(Long adharId) {
 		this.adharId = adharId;
 	}
 
@@ -253,6 +271,62 @@ public class User {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
 	
+//	public User(Long id, @Email(message = "Invalid email address") String email,
+//			@Pattern(regexp = "^[6-9]\\d{9}$", message = " Invalid mobile number") Long mobileNum, Long adharId,
+//			String title, String firstName, String middleName, String fatherName, String lastName, String dob,
+//			@Min(10) int age, String gender, String permAddId, String tempAddId, int isAdmin, String occupationType,
+//			String incomeSource, double annualIncome, Account account) {
+//		this.id = id;
+//		this.email = email;
+//		this.mobileNum = mobileNum;
+//		this.adharId = adharId;
+//		this.title = title;
+//		this.firstName = firstName;
+//		this.middleName = middleName;
+//		this.fatherName = fatherName;
+//		this.lastName = lastName;
+//		this.dob = dob;
+//		this.age = age;
+//		this.gender = gender;
+//		this.permAddId = permAddId;
+//		this.tempAddId = tempAddId;
+//		this.isAdmin = isAdmin;
+//		this.occupationType = occupationType;
+//		this.incomeSource = incomeSource;
+//		this.annualIncome = annualIncome;
+//		this.account = account;
+//	}
+
+	public User() {
+	}
+
+public User(Long id, @Email(message = "Invalid email address") String email, Long mobileNum, Long adharId, String title,
+		String firstName, String middleName, String fatherName, String lastName, String dob, @Min(10) int age,
+		String gender, String permAddId, String tempAddId, int isAdmin, String occupationType, String incomeSource,
+		double annualIncome, Account account) {
+	this.id = id;
+	this.email = email;
+	this.mobileNum = mobileNum;
+	this.adharId = adharId;
+	this.title = title;
+	this.firstName = firstName;
+	this.middleName = middleName;
+	this.fatherName = fatherName;
+	this.lastName = lastName;
+	this.dob = dob;
+	this.age = age;
+	this.gender = gender;
+	this.permAddId = permAddId;
+	this.tempAddId = tempAddId;
+	this.isAdmin = isAdmin;
+	this.occupationType = occupationType;
+	this.incomeSource = incomeSource;
+	this.annualIncome = annualIncome;
+	this.account = account;
+}
+	
+	
+
+
 }
