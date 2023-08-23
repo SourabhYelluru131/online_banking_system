@@ -7,11 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
-import "./Login.css"
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -35,6 +37,7 @@ export default function SignIn() {
     email: "",
     password: ""
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -46,7 +49,35 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const data = {
+      userid: state.userid,
+      password: state.password
+    }
     console.log(state);
+    try {
+      const response = axios.post('http://127.0.0.1:8082/user/login', data);
+      
+      if (response.data.success) {
+        sessionStorage.setItem('userID', state.userid);
+        console.log('Login successful!');
+        
+      } else {
+        console.log('Login failed. Incorrect email or password.');
+      }
+    }catch (error) {
+        console.error('An error occurred while logging in:', error);
+    }
+    
+    sessionStorage.setItem("userID", state.email);
+
+    const sessionTimeoutMinutes = 15;
+  const sessionTimeoutMilliseconds = sessionTimeoutMinutes * 60 * 1000; // Convert minutes to milliseconds
+  const clearSessionTimer = setTimeout(() => {
+    sessionStorage.clear();
+  }, sessionTimeoutMilliseconds);   
+
+    navigate("/dashboard");
+
   };
 
   return (
@@ -62,7 +93,7 @@ export default function SignIn() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            
+            <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Login
@@ -71,13 +102,13 @@ export default function SignIn() {
           <div className='full-form'>
           <div className="form-field">
             <div className='left-col'>
-          <label>Email</label>
+          <label>User ID:</label>
           </div>
           <input
             type="text"
             name="email"
             className='right-col'
-            value={state.email}
+            value={state.userid}
             onChange={handleInputChange}
           />
         </div>
@@ -108,24 +139,13 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/forgotUserID" variant="body2">
-                  {"Forgot User ID?"}
-                </Link>
+                <Link href="#" variant="body2">
                 
-              </Grid>
-              <Grid item>
-              
-                <Link href="/Register" variant="body2">
-                  {"First Time User? Register"}
                 </Link>
               </Grid>
-            </Grid>
-            <Grid container>
-              
               <Grid item>
-              
-                <Link href="/forgotPassword" variant="body2">
-                  {"Forgot Password?"}
+                <Link href="#" variant="body2">
+                  {"First Time User? Register"}
                 </Link>
               </Grid>
             </Grid>
