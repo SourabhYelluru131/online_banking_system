@@ -25,7 +25,7 @@ export default function Transaction() {
         event.preventDefault();
         console.log(state);
         console.log("Displaying success next");
-        navigate(<DisplaySuccess ReferenceID={"098765432"} mode={"RTGS"} deb_acc={123456789} cred_acc={234567890} amt={1000} timestamp={10101010} remarks={"Hello"}/>);
+        navigate("/Success");
       };
 
     const handleOptionChange = (event) => {
