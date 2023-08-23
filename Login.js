@@ -2,7 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
@@ -12,6 +11,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -31,13 +33,51 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [state, setState] = useState({
+    email: "",
+    password: ""
+  });
+  const navigate = useNavigate();
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setState((prevProps) => ({
+      ...prevProps,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data = {
+      userid: state.userid,
+      password: state.password
+    }
+    console.log(state);
+    try {
+      const response = axios.post('http://127.0.0.1:8082/user/login', data);
+      
+      if (response.data.success) {
+        sessionStorage.setItem('userID', state.userid);
+        console.log('Login successful!');
+        
+      } else {
+        console.log('Login failed. Incorrect email or password.');
+      }
+    }catch (error) {
+        console.error('An error occurred while logging in:', error);
+    }
+    
+    sessionStorage.setItem("userID", state.email);
+
+    const sessionTimeoutMinutes = 15;
+  const sessionTimeoutMilliseconds = sessionTimeoutMinutes * 60 * 1000; // Convert minutes to milliseconds
+  const clearSessionTimer = setTimeout(() => {
+    sessionStorage.clear();
+  }, sessionTimeoutMilliseconds);   
+
+    navigate("/dashboard");
+
   };
 
   return (
@@ -46,7 +86,7 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 12,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -59,26 +99,32 @@ export default function SignIn() {
             Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="User ID"
-              label="User ID"
-              name="User ID"
-              autoComplete="User ID"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+          <div className='full-form'>
+          <div className="form-field">
+            <div className='left-col'>
+          <label>User ID:</label>
+          </div>
+          <input
+            type="text"
+            name="email"
+            className='right-col'
+            value={state.userid}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="form-field">
+          <div className='left-col'>
+          <label>Password</label>
+          </div>
+          <input
+            className='right-col'
+            type="password"
+            name="password"
+            value={state.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        </div>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
