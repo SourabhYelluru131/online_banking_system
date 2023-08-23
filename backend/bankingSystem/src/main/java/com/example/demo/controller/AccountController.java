@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.AccountDTO;
+import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.NewPasswordDTO;
 import com.example.demo.dto.SuccessResponse;
 import com.example.demo.exception.BadRequestException;
@@ -53,7 +54,8 @@ public class AccountController {
 	public ResponseEntity<?>  login(@RequestBody Login login) {
 		Optional<Account> account = accountRepository.findByUsernameAndLoginPasswd(login.getUsername(), login.getPassword());
 		if(account.isPresent()) {
-	        return ResponseEntity.ok(new SuccessResponse<>("Login successful"));
+			LoginDTO loginResponse = new LoginDTO(account.get().getUser().getId(), account.get().getAccountNum(), account.get().getUser().getEmail());
+	        return ResponseEntity.ok(new SuccessResponse<>("Login successful", loginResponse));
 		} else {
 			throw new UnauthorizedException("Username or password is incorrect");
 		}
