@@ -45,11 +45,11 @@ public class User {
 	@Column(unique = true, nullable = false)
 
 	@Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number")
-	private Long mobile_num;
+	private Long mobileNum;
 
 	@NotBlank(message="Adhar no is required")
 	@Column(unique = true, nullable = false)
-	private Long adhar_id;
+	private Long adharId;
 	
 	@NotBlank(message="title is required - Mr/Ms/Mrs")
 	@Column(nullable = false)
@@ -58,16 +58,16 @@ public class User {
 	
 	@NotBlank(message="middle_name is required")
 	@Column(nullable = false)
-	private String first_name;
-	private String middle_name;
+	private String firstName;
+	private String middleName;
 	
 	@NotBlank(message="father_name is required")
 	@Column(nullable=false)
-	private String father_name;
+	private String fatherName;
 	
 	@NotBlank(message="Last name is required")
 	@Column(nullable = false)
-	private String last_name;
+	private String lastName;
 	
 	@NotBlank(message="Date of birth is required")
 	@Column(nullable = false)
@@ -86,64 +86,34 @@ public class User {
 	
 	@Column(nullable = false)
 	@NotBlank(message="Permanent address is required")
-	private String perm_add_id;
+	private String permAddId;
 	
 	@NotBlank(message="Temp address is required")
 	@Column(nullable=false)
-	private String temp_add_id;
+	private String tempAddId;
 	
 	@NotBlank(message="Choose 1 for Yes ,0 for No")
 	@Column(nullable = false)
 	@ValidateIsAdmin
 	//@ValueOfEnum(enumClass=IsAdmin.class,message="Choose 1 for Yes or 0 for No")
-	private int is_admin;
+	private int isAdmin;
 	
 	@NotBlank(message="Occupation type is required")
 	@Column(nullable = false)
-	private String occupation_type;
+	private String occupationType;
 	
 	@NotBlank(message="Income source is required")
 	@Column(nullable = false)
-	private String income_source;
+	private String incomeSource;
 	
 	@NotBlank(message="Annual Income is required")
 	@Column(nullable = false)
-	private double annual_income;
+	private double annualIncome;
 	
 //	fetch=FetchType.EAGER,
 	//@OneToOne(mappedBy = "user",  cascade=CascadeType.ALL)
 	@OneToOne(mappedBy = "user")
 	private Account account;
-
-	public User() {
-		super();
-	}
-
-	public User(Long id, String email, Long mobile_num, Long adhar_id, String title, String first_name,
-			String middle_name, String father_name, String last_name, String dob, int age, String gender,
-			String perm_add_id, String temp_add_id, int is_admin, String occupation_type, String income_source,
-			double annual_income, Account account) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.mobile_num = mobile_num;
-		this.adhar_id = adhar_id;
-		this.title = title;
-		this.first_name = first_name;
-		this.middle_name = middle_name;
-		this.father_name = father_name;
-		this.last_name = last_name;
-		this.dob = dob;
-		this.age = age;
-		this.gender = gender;
-		this.perm_add_id = perm_add_id;
-		this.temp_add_id = temp_add_id;
-		this.is_admin = is_admin;
-		this.occupation_type = occupation_type;
-		this.income_source = income_source;
-		this.annual_income = annual_income;
-		this.account = account;
-	}
 
 	public Long getId() {
 		return id;
@@ -161,20 +131,20 @@ public class User {
 		this.email = email;
 	}
 
-	public Long getMobile_num() {
-		return mobile_num;
+	public Long getMobileNum() {
+		return mobileNum;
 	}
 
-	public void setMobile_num(Long mobile_num) {
-		this.mobile_num = mobile_num;
+	public void setMobileNum(Long mobileNum) {
+		this.mobileNum = mobileNum;
 	}
 
-	public Long getAdhar_id() {
-		return adhar_id;
+	public Long getAdharId() {
+		return adharId;
 	}
 
-	public void setAdhar_id(Long adhar_id) {
-		this.adhar_id = adhar_id;
+	public void setAdharId(Long adharId) {
+		this.adharId = adharId;
 	}
 
 	public String getTitle() {
@@ -185,36 +155,36 @@ public class User {
 		this.title = title;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getMiddle_name() {
-		return middle_name;
+	public String getMiddleName() {
+		return middleName;
 	}
 
-	public void setMiddle_name(String middle_name) {
-		this.middle_name = middle_name;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
-	public String getFather_name() {
-		return father_name;
+	public String getFatherName() {
+		return fatherName;
 	}
 
-	public void setFather_name(String father_name) {
-		this.father_name = father_name;
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getDob() {
@@ -241,52 +211,52 @@ public class User {
 		this.gender = gender;
 	}
 
-	public String getPerm_add_id() {
-		return perm_add_id;
+	public String getPermAddId() {
+		return permAddId;
 	}
 
-	public void setPerm_add_id(String perm_add_id) {
-		this.perm_add_id = perm_add_id;
+	public void setPermAddId(String permAddId) {
+		this.permAddId = permAddId;
 	}
 
-	public String getTemp_add_id() {
-		return temp_add_id;
+	public String getTempAddId() {
+		return tempAddId;
 	}
 
-	public void setTemp_add_id(String temp_add_id) {
-		this.temp_add_id = temp_add_id;
+	public void setTempAddId(String tempAddId) {
+		this.tempAddId = tempAddId;
 	}
 
-	public int getIs_admin() {
-		return is_admin;
+	public int getIsAdmin() {
+		return isAdmin;
 	}
 
-	public void setIs_admin(int is_admin) {
-		this.is_admin = is_admin;
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
-	public String getOccupation_type() {
-		return occupation_type;
+	public String getOccupationType() {
+		return occupationType;
 	}
 
-	public void setOccupation_type(String occupation_type) {
-		this.occupation_type = occupation_type;
+	public void setOccupationType(String occupationType) {
+		this.occupationType = occupationType;
 	}
 
-	public String getIncome_source() {
-		return income_source;
+	public String getIncomeSource() {
+		return incomeSource;
 	}
 
-	public void setIncome_source(String income_source) {
-		this.income_source = income_source;
+	public void setIncomeSource(String incomeSource) {
+		this.incomeSource = incomeSource;
 	}
 
-	public double getAnnual_income() {
-		return annual_income;
+	public double getAnnualIncome() {
+		return annualIncome;
 	}
 
-	public void setAnnual_income(double annual_income) {
-		this.annual_income = annual_income;
+	public void setAnnualIncome(double annualIncome) {
+		this.annualIncome = annualIncome;
 	}
 
 	public Account getAccount() {
@@ -296,34 +266,49 @@ public class User {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
+	public User(Long id,
+			@Email(message = "Invalid email address") @NotBlank(message = "email is required") String email,
+			@NotBlank(message = "Mobile num is required- 10 digits without leading 0") @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number") Long mobileNum,
+			@NotBlank(message = "Adhar no is required") Long adharId,
+			@NotBlank(message = "title is required - Mr/Ms/Mrs") String title,
+			@NotBlank(message = "middle_name is required") String firstName, String middleName,
+			@NotBlank(message = "father_name is required") String fatherName,
+			@NotBlank(message = "Last name is required") String lastName,
+			@NotBlank(message = "Date of birth is required") String dob,
+			@NotBlank(message = "Age is required,min age is 10") @Min(10) int age,
+			@NotBlank(message = "Gender is required - male/female/other") String gender,
+			@NotBlank(message = "Permanent address is required") String permAddId,
+			@NotBlank(message = "Temp address is required") String tempAddId,
+			@NotBlank(message = "Choose 1 for Yes ,0 for No") int isAdmin,
+			@NotBlank(message = "Occupation type is required") String occupationType,
+			@NotBlank(message = "Income source is required") String incomeSource,
+			@NotBlank(message = "Annual Income is required") double annualIncome, Account account) {
+		this.id = id;
+		this.email = email;
+		this.mobileNum = mobileNum;
+		this.adharId = adharId;
+		this.title = title;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.fatherName = fatherName;
+		this.lastName = lastName;
+		this.dob = dob;
+		this.age = age;
+		this.gender = gender;
+		this.permAddId = permAddId;
+		this.tempAddId = tempAddId;
+		this.isAdmin = isAdmin;
+		this.occupationType = occupationType;
+		this.incomeSource = incomeSource;
+		this.annualIncome = annualIncome;
+		this.account = account;
+	}
+
+	public User() {
+	}
 	
-//	public User() {
-//		super();
-//	}
-//
-//	public User(Long id, String email, Long mobile_num, Long adhar_id, String title, String first_name,
-//			String middle_name, String father_name, String last_name, String dob, int age, String gender,
-//			String perm_add_id, String temp_add_id, int is_admin, String occupation_type, String income_source,
-//			double annual_income) {
-//		super();
-//		this.id = id;
-//		this.email = email;
-//		this.mobile_num = mobile_num;
-//		this.adhar_id = adhar_id;
-//		this.title = title;
-//		this.first_name = first_name;
-//		this.middle_name = middle_name;
-//		this.father_name = father_name;
-//		this.last_name = last_name;
-//		this.dob = dob;
-//		this.age = age;
-//		this.gender = gender;
-//		this.perm_add_id = perm_add_id;
-//		this.temp_add_id = temp_add_id;
-//		this.is_admin = is_admin;
-//		this.occupation_type = occupation_type;
-//		this.income_source = income_source;
-//		this.annual_income = annual_income;
-//	}
+	
+
 
 }
