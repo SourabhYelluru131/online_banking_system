@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.CascadeType;
 import org.hibernate.validator.constraints.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.validation.ValidateGender;
 import com.example.demo.validation.ValidateIsAdmin;
@@ -18,6 +19,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -27,11 +30,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import javax.validation.constraints.*;
 //@Getter
 //@Setter
 //@AllArgsConstructor
 //@NoArgsConstructor
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 @Entity
 public class User {
 
@@ -40,18 +44,14 @@ public class User {
 	private Long id;
 	@Column(unique = true, nullable = false)
 	@Email(message = "Invalid email address")
-	@NotNull
+//	@NotNull(message = "")
 	private String email;
 	
-	@NotNull
+//	@NotNull(message = "mobile number cant be null ")
 	@Column(unique = true, nullable = false)
 
 	//@Pattern(regexp = "^[6-9]\\d{9}$", message = " Invalid mobile number")
 	private Long mobileNum;
-
-	
-
-
 	@NotNull
 	@Column(unique = true, nullable = false)
 	private Long adharId;

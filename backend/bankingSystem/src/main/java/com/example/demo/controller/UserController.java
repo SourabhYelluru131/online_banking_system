@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +42,17 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@PostMapping("/user")
-	public ResponseEntity<?>  addUser(@RequestBody User newUser) {
+	public ResponseEntity<?>  addUser(@Valid @RequestBody User newUser) {
 		try {
 			userRepository.save(newUser);
 		} catch(IllegalArgumentException ex) {
 	        throw new IllegalArgumentException("Arguments are not valid");			
 		}
+////		catch(ConstraintViolationException ex) {
+////			System.out.println(ex.getConstraintViolations());
+////			//throw new ConstraintViolationException(ex.getConstraintViolations());
+////			 throw new IllegalArgumentException("Arguments are not valid");			
+////		}
 		SuccessResponse<String> successResponse = new SuccessResponse<>("User created successfully");
         return ResponseEntity.ok(successResponse);
 	}

@@ -28,6 +28,7 @@ public class TranscationController {
 	@PostMapping("/transfer")
 	public ResponseEntity<?> transferMoney(@RequestBody Transcation tr) {
 		try {
+			
 			transcationRepository.save(tr);
 			SuccessResponse<String> successResponse = new SuccessResponse<>("Transaction happened successfully");
 	        return ResponseEntity.ok(successResponse);
@@ -43,4 +44,5 @@ public class TranscationController {
 			SuccessResponse<List<TranscationDTO> > successResponse = new SuccessResponse<>("Fetched transactions successfully", Mapper.transcationsEntitytoDTO(transcations));
 	        return ResponseEntity.ok(successResponse);
 	}
+	
 }
